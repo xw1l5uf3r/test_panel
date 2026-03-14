@@ -1,0 +1,64 @@
+body {
+  background-image: url('../public/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #828282;
+  color: #F6F6F6
+}
+
+input {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+    scrollbar-color: #686868 transparent;
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #686868;
+  border-radius: 8px;
+}
+
+textarea::-webkit-scrollbar {
+  cursor: default;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  cursor: default;
+}
+
+textarea::-webkit-scrollbar-track {
+  cursor: default;
+}
+
+:root {
+  --font-lexend: 'Lexend', sans-serif;
+}
+
+html, body {
+  font-family: var(--font-lexend);
+}
+
+*, *::before, *::after {
+  font-family: inherit;
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #E5E5E5 inset; /* или любой нужный цвет */
+  -webkit-text-fill-color: #000; /* цвет текста */
+  transition: background-color 5000s ease-in-out 0s; /* убирает мигание */
+}
