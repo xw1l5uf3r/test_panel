@@ -6,7 +6,6 @@ type Props = {
   setNewData: (v: string) => void
   isAdmin: boolean
   currentAccount: string | null
-  logs: Log[]
   updateData: () => void
   checkWalletConnection: () => void
 }
@@ -17,7 +16,6 @@ export default function AdminPanelView({
   setNewData,
   isAdmin,
   currentAccount,
-  logs,
   updateData,
   checkWalletConnection
 }: Props) {
