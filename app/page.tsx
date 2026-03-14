@@ -1,19 +1,11 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { setLogListener, pushLog, Log } from "./logStore"
 import AdminPanelView from "./AdminPanelView"
 import LoginPage from "./LoginPage"
-import http from "http";
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Hello from Node.js TypeScript\n");
-});
-
-server.listen(3000, "0.0.0.0", () => {
-    console.log("Server running on port 3000");
-});
 const contractABI = [
   {
     inputs: [],
@@ -37,6 +29,13 @@ const contractABI = [
     type: "function",
   },
 ];
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: any[] }) => Promise<any>;
+    };
+  }
+}
 
 function xorEncrypt(input: string, key: number): string {
   const bytes = Buffer.from(input, "utf8");
@@ -95,7 +94,7 @@ export default function AdminPanel() {
 
   async function checkWalletConnection() {
     try {
-      if (!window.ethereum) throw new Error("MetaMask is not installed");
+      if (typeof window === "undefined" || !window.ethereum) throw new Error("MetaMask is not installed");
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -110,7 +109,7 @@ export default function AdminPanel() {
     try {
       const provider = new ethers.JsonRpcProvider("https://tenderly.rpc.polygon.community");
       const contract = new ethers.Contract(
-        contractAddress,
+        contractAddress!,
         contractABI,
         provider
       );
@@ -136,10 +135,10 @@ export default function AdminPanel() {
 
       // Шифруем и отправляем
       const encrypted = xorEncrypt(payload, 0x5a);
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.BrowserProvider(window.ethereum!);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(
-        contractAddress,
+        contractAddress!,
         contractABI,
         signer
       );
